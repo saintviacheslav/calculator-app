@@ -5,6 +5,8 @@ Calculator App
 Требования
 - Node.js (версия 18+).
 - Git.
+
+
 Шаги для запуска
 1. git clone https://github.com/saintviacheslav/calculator-app.git
 2. cd calculator-app
