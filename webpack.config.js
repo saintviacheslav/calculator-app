@@ -3,19 +3,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-   entry: './app.js', // Точка входа — твой основной JS в корне
+   entry: './app.js',
    output: {
-      filename: 'app.bundle.js', // Выходной JS: один минифицированный бандл
-      path: path.resolve(__dirname, 'dist'), // Папка: dist/
-      clean: true, // Очищает dist перед билдом
+      filename: 'app.bundle.js',
+      path: path.resolve(__dirname, 'dist'),
+      clean: true,
    },
-   mode: 'production', // Оптимизация: минификация, tree-shaking
+   mode: 'production',
    resolve: {
-      extensions: ['.js', '.css'], // Явно разрешаем .js и .css (фиксит resolve)
+      extensions: ['.js', '.css'],
    },
    module: {
       rules: [
-         // JS: Babel для ES6+ (если нужно; иначе удали)
          {
             test: /\.js$/,
             exclude: /node_modules/,
@@ -26,15 +25,14 @@ module.exports = {
                },
             },
          },
-         // CSS: Встраиваем в JS + минификация
          {
             test: /\.css$/,
             use: [
-               'style-loader', // В CSS-in-JS
+               'style-loader',
                {
                   loader: 'css-loader',
                   options: {
-                     importLoaders: 1, // Для @import (variables.css)
+                     importLoaders: 1,
                   },
                },
             ],
@@ -43,8 +41,8 @@ module.exports = {
    },
    plugins: [
       new HtmlWebpackPlugin({
-         template: './index.html', // Твой HTML как шаблон
-         filename: 'index.html', // Выход: dist/index.html с <script src="app.bundle.js">
+         template: './index.html',
+         filename: 'index.html',
       }),
    ],
    optimization: {
@@ -53,13 +51,12 @@ module.exports = {
          new TerserPlugin({
             terserOptions: {
                compress: true,
-               mangle: true, // Обфускация имён переменных
+               mangle: true,
             },
          }),
       ],
-      usedExports: true, // Tree-shaking: удаляет неиспользуемый код
+      usedExports: true,
    },
-   // Dev-сервер для теста
    devServer: {
       static: path.resolve(__dirname, 'dist'),
       compress: true,
